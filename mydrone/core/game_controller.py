@@ -1,4 +1,4 @@
-from codrone_edu.drone import Drone
+from mydrone import MyDrone
 
 from .key_listener import KeyListener, bind
 
@@ -8,10 +8,13 @@ class GameController:
     ROW_POWER = 30
     UP_DOWN_POWER = 30
 
-    def __init__(self, drone: Drone):
+    def __init__(self, drone: MyDrone):
         self.drone = drone
         self.listener = KeyListener(self)
+
+    def start(self):
         self.listener.start()
+        self.drone.start()
 
     @bind("w", True)
     def press_w(self):
