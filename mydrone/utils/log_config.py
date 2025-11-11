@@ -14,12 +14,12 @@ class TraceStyleFormatter(logging.Formatter):
             stack = self.__filter_stack()
             return f"{header}\n{stack}{message}\n"
         else:
-            location = f"File: {record.pathname}:{record.lineno}"
+            location = f'File: "{record.pathname}:{record.lineno}"'
             return f"{header}\n{self.__add_space(location, 2)}\n{self.__add_space(message, 4)}\n"
 
     def __filter_stack(self) -> str:
         stack = []
-        project_root = "LolAudit"
+        project_root = "mydrone"
         for line in traceback.format_stack():
             stack.append(line)
             if project_root in line and "logger." not in line:
@@ -40,19 +40,15 @@ def setup_logging() -> None:
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(formatter)
 
-    file_handler = logging.FileHandler("lolaudit.log", encoding="utf-8")
+    file_handler = logging.FileHandler("drone_katsu.log", encoding="utf-8")
     file_handler.setFormatter(formatter)
 
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.WARNING)
     root_logger.addHandler(console_handler)
 
-    logger = logging.getLogger("lolaudit")
+    logger = logging.getLogger("mydrone")
     logger.setLevel(logging.INFO)
     logger.addHandler(console_handler)
     logger.addHandler(file_handler)
     logger.propagate = False
-
-    web_socket_logger = logging.getLogger("websocket")
-    web_socket_logger.setLevel(logging.CRITICAL)
-    web_socket_logger.propagate = False
