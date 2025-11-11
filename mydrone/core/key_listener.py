@@ -64,7 +64,7 @@ class KeyListener:
             return
 
         if k in self.move_bindings:
-            func, power = self.move_bindings[k]
+            func, power, _ = self.move_bindings[k]
             func(power)
         elif k in self.press_bindings:
             self.press_bindings[k]()
@@ -74,8 +74,8 @@ class KeyListener:
         k = self.normalize(key)
 
         if k in self.move_bindings:
-            func, _ = self.move_bindings[k]
-            func(0)
+            func, _, power = self.move_bindings[k]
+            func(power)
         elif k in self.release_bindings:
             self.release_bindings[k]()
             self.is_pressing.discard(k)
