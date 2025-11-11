@@ -1,6 +1,10 @@
+import logging
+
 from mydrone import MyDrone
 
 from .key_listener import KeyListener, bind
+
+logger = logging.getLogger(__name__)
 
 
 class GameController:
@@ -24,6 +28,7 @@ class GameController:
         self.listener = KeyListener(self, self.bindings)
 
     def start(self):
+        logger.info("GameController started")
         self.listener.start()
         self.drone.start()
         self.is_running = True
@@ -31,11 +36,11 @@ class GameController:
             self.drone.move()
 
     def stop(self):
+        logger.info("GameController stopping")
         self.drone.stop()
         self.listener.stop()
         self.is_running = False
 
     @bind("key.esc", True)
     def press_esc(self):
-        print("按下 ESC，結束程式")
         self.stop()
