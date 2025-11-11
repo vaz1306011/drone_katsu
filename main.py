@@ -1,4 +1,6 @@
 from mydrone import MyDrone
+from mydrone.core.game_controller import GameController
 
 md = MyDrone()
-md.test()
+gc = GameController(md)
+gc.start()
